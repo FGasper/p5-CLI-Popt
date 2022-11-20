@@ -479,9 +479,19 @@ parse (SV* self_sv, ...)
         if (rc != -1) {
             SvREFCNT_dec((SV*) named_args);
 
-            croak("%s: %s",
-                poptBadOption(perl_popt->popt, 0),
-                poptStrerror(rc)
+            const char *opt = poptBadOption(perl_popt->popt, 0);
+            const char *errdesc = poptStrerror(rc);
+
+            SV* args[] = {
+                newSViv(rc),
+                newSVpv(errdesc, 0),
+                newSVpv(opt, 0),
+                NULL,
+            };
+
+            exs_call_sv_void(
+                (SV*) get_cv( PERL_NS "::_croak", 0 ),
+                args
             );
         }
 

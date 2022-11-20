@@ -29,6 +29,8 @@ CLI::Popt - Parse CLI parameters via L<popt(3)>
         name => $0,     # default; shown just for demonstration
     );
 
+    my ($opts_hr, @leftovers) = $popt->parse(@ARGV);
+
 =head1 DESCRIPTION
 
 L<Getopt::Long> is nice, but its inability to auto-generate help & usage
@@ -49,6 +51,8 @@ decode/encode according to your application’s needs.
 
 use Carp ();
 use XSLoader;
+
+use CLI::Popt::X ();
 
 our $VERSION = '0.01_01';
 
@@ -165,6 +169,12 @@ sub new {
     }
 
     return $class->_new_xs( $extra{'name'}, \@opts );
+}
+
+sub _croak {
+    my ($type, @args) = @_;
+
+    Carp::croak( CLI::Popt::X->create('BadOption', $type, @args) );
 }
 
 #----------------------------------------------------------------------

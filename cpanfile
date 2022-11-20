@@ -3,6 +3,8 @@ on configure => sub {
     requires 'ExtUtils::PkgConfig';
 };
 
+requires 'X::Tiny' => '0.22';
+
 on test => sub {
     requires 'Test::More';
     requires 'Test::FailWarnings';

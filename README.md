@@ -22,6 +22,8 @@ CLI::Popt - Parse CLI parameters via [popt(3)](http://man.he.net/man3/popt)
         name => $0,     # default; shown just for demonstration
     );
 
+    my ($opts_hr, @leftovers) = $popt->parse(@ARGV);
+
 # DESCRIPTION
 
 [Getopt::Long](https://metacpan.org/pod/Getopt%3A%3ALong) is nice, but its inability to auto-generate help & usage

@@ -16,4 +16,7 @@ easyxs/easyxs_structref.h
 easyxs/init.h
 easyxs/ppport.h
 lib/CLI/Popt.pm
+lib/CLI/Popt/X.pm
+lib/CLI/Popt/X/BadOption.pm
+lib/CLI/Popt/X/Base.pm
 t/basic.t

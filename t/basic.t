@@ -6,6 +6,7 @@ use warnings;
 use Test::More;
 use Test::FailWarnings;
 use Test::Deep;
+use Test::Fatal;
 
 use CLI::Popt;
 
@@ -76,10 +77,6 @@ use CLI::Popt;
         qw(    one two three ),
     );
 
-    diag explain \@got;
-
-    diag "===== after parse";
-
     cmp_deeply(
         \@got,
     [
@@ -97,6 +94,23 @@ use CLI::Popt;
     ],
         'parse() as expected',
     ) or diag explain \@got;
+
+    my $err = exception {
+        diag explain [ $popt->parse('--zzz') ]
+    };
+
+    cmp_deeply(
+        $err,
+        all(
+            Isa('CLI::Popt::X::BadOption'),
+            methods(
+                [ get => 'option' ] => '--zzz',
+                [ get => 'error_code' ] => re( qr<\A-?[0-9]+\z> ),
+                [ get => 'error_desc' ] => re( qr<[a-z]+>),
+            ),
+        ),
+        'bad option: expected error thrown',
+    ) or diag explain $err;
 }
 
 done_testing;
