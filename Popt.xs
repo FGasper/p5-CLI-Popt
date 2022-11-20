@@ -98,7 +98,7 @@ static void _free_popt_options(pTHX_ struct poptOption *opts) {
     while (cur->longName || cur->shortName) {
 
         if (cur->argInfo & POPT_ARG_ARGV) {
-            assert(0);
+            ASSUME(0);
         }
         else {
             if (cur->arg) Safefree(cur->arg);
@@ -176,7 +176,7 @@ static void _store_opt_in_hv (pTHX_ const struct poptOption* curopt, HV* hv) {
             break;
         default:
             val_sv = NULL;   // silence compiler warning
-            assert(0);
+            ASSUME(0);
     }
 
     hv_store(hv, curopt->longName, strlen(curopt->longName), val_sv, 0);
@@ -190,7 +190,7 @@ static void _popt_option_callback(
     void * data
 ) {
     PERL_UNUSED_ARG(reason);
-    assert(data != NULL);
+    ASSUME(data != NULL);
 
     struct popt_option_callback_userdata* userdata = data;
 
@@ -228,11 +228,12 @@ static struct poptOption* _create_popt_options(pTHX_ perl_popt_st* perl_popt, SV
     //
     for (int ii=0; ii<optslen; ii++) {
         SV** cur_hrp = av_fetch(opts_av, ii, 0);
-        assert(cur_hrp);
-        assert(*cur_hrp);
-        assert(SvTYPE(*cur_hrp) == SVt_PVHV);
+        ASSUME(cur_hrp);
+        ASSUME(*cur_hrp);
+        ASSUME(SvROK(*cur_hrp));
 
         HV* curopt_perl = (HV*) SvRV(*cur_hrp);
+        ASSUME(SvTYPE(curopt_perl) == SVt_PVHV);
 
         SV** val_svp = hv_fetchs(curopt_perl, "val", 0);
         if (val_svp && *val_svp) exs_SvIV(*val_svp);
@@ -262,8 +263,8 @@ static struct poptOption* _create_popt_options(pTHX_ perl_popt_st* perl_popt, SV
         }
 
         SV** arginfo_svp = hv_fetchs(curopt_perl, "arginfo", 0);
-        assert(arginfo_svp);
-        assert(*arginfo_svp);
+        ASSUME(arginfo_svp);
+        ASSUME(*arginfo_svp);
 
         IV arginfo = SvIV(*arginfo_svp);
 
@@ -299,7 +300,7 @@ static struct poptOption* _create_popt_options(pTHX_ perl_popt_st* perl_popt, SV
                 break;
             default:
                 arg_p = NULL;   // silence compiler warning
-                assert(0);
+                ASSUME(0);
         }
 
         SV** val_svp = hv_fetchs(curopt_perl, "val", 0);
@@ -534,7 +535,7 @@ get_help (SV* self_sv)
         // silence unused-var warning
         (void) got;
 
-        assert(got == size);    // can this fail?
+        ASSUME(got == size);    // can this fail?
 
     OUTPUT:
         RETVAL
