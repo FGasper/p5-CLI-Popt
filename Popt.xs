@@ -530,7 +530,7 @@ get_help (SV* self_sv)
         SvPOK_on(RETVAL);
         SvCUR_set(RETVAL, size);
 
-        size_t got = fread(SvPVX(RETVAL), size, 1, tf);
+        size_t got = fread(SvPVX(RETVAL), 1, size, tf);
 
         // silence unused-var warning
         (void) got;
