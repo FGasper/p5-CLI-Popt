@@ -41,7 +41,7 @@ to Perl.
 =head1 CHARACTER ENCODING
 
 All strings into & out of this library are byte strings. Please
-decode/encode accordingly.
+decode/encode according to your application’s needs.
 
 =cut
 
@@ -144,8 +144,6 @@ sub new {
 
         my $type = $copy{'type'} || _DEFAULT_TYPE;
 
-        $type = _fix_type_none_bug($type, \%copy);
-
         my $arginfo = $type2num{$type};
         if ( !defined $arginfo ) {
             Carp::croak("Bad type: $copy{'type'}");
@@ -167,26 +165,6 @@ sub new {
     }
 
     return $class->_new_xs( $extra{'name'}, \@opts );
-}
-
-sub _fix_type_none_bug {
-    my ($type, $opt_hr) = @_;
-
-
-    # `none` triggers popt memory-handling bugs on MacPorts’s build
-    # as of 8 Nov 2022. So transparently represent it instead as
-    # a setup that doesn’t seem to fail.
-    #
-    if ($type eq 'none') {
-        $type = 'val';
-        if (exists $opt_hr->{'val'}) {
-            Carp::croak('Type `none` cannot take `val`');
-        }
-
-        $opt_hr->{'val'} = 1;
-    }
-
-    return $type;
 }
 
 #----------------------------------------------------------------------
