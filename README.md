@@ -1,6 +1,6 @@
 # NAME
 
-CLI::Popt - Parse CLI parameters via [popt(3)](http://man.he.net/man3/popt)
+CLI::Popt - Parse CLI parameters via [popt](https://github.com/rpm-software-management/popt)
 
 # SYNOPSIS
 
@@ -8,9 +8,7 @@ CLI::Popt - Parse CLI parameters via [popt(3)](http://man.he.net/man3/popt)
         [
 
             # A simple boolean:
-            {
-                long_name => 'verbose',
-            },
+            { long_name => 'help' },
 
             # Customize the boolean’s truthy value:
             {
@@ -24,14 +22,21 @@ CLI::Popt - Parse CLI parameters via [popt(3)](http://man.he.net/man3/popt)
 
     my ($opts_hr, @leftovers) = $popt->parse(@ARGV);
 
+    if ($opts_hr->{'help'}) {
+        print $popt->get_help();
+        exit;
+    }
+
+… and so on.
+
 # DESCRIPTION
 
 [Getopt::Long](https://metacpan.org/pod/Getopt%3A%3ALong) is nice, but its inability to auto-generate help & usage
 text requires you to duplicate data between your code and your script’s
 documentation.
 
-[popt(3)](http://man.he.net/man3/popt) remedies that problem. This module makes that solution available
-to Perl.
+[popt](https://github.com/rpm-software-management/popt) remedies that problem.
+This module makes that solution available to Perl.
 
 # CHARACTER ENCODING
 

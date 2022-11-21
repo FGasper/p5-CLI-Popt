@@ -7,7 +7,7 @@ use warnings;
 
 =head1 NAME
 
-CLI::Popt - Parse CLI parameters via L<popt(3)>
+CLI::Popt - Parse CLI parameters via L<popt|https://github.com/rpm-software-management/popt>
 
 =head1 SYNOPSIS
 
@@ -15,9 +15,7 @@ CLI::Popt - Parse CLI parameters via L<popt(3)>
         [
 
             # A simple boolean:
-            {
-                long_name => 'verbose',
-            },
+            { long_name => 'help' },
 
             # Customize the boolean’s truthy value:
             {
@@ -31,14 +29,21 @@ CLI::Popt - Parse CLI parameters via L<popt(3)>
 
     my ($opts_hr, @leftovers) = $popt->parse(@ARGV);
 
+    if ($opts_hr->{'help'}) {
+        print $popt->get_help();
+        exit;
+    }
+
+… and so on.
+
 =head1 DESCRIPTION
 
 L<Getopt::Long> is nice, but its inability to auto-generate help & usage
 text requires you to duplicate data between your code and your script’s
 documentation.
 
-L<popt(3)> remedies that problem. This module makes that solution available
-to Perl.
+L<popt|https://github.com/rpm-software-management/popt> remedies that problem.
+This module makes that solution available to Perl.
 
 =head1 CHARACTER ENCODING
 
