@@ -48,8 +48,9 @@ Each @OPTIONS member is a reference to a hash that describes an option
 that the returned $obj will `parse()` out:
 
 - `long_name` (required)
-- `type` - optional; one of: `none` (default), `string`, `short`,
-`int`, `long`, `longlong`, `float`, or `double`
+- `type` - optional; one of: `none` (default), `string`,
+`argv` (i.e., an array of strings), `short`, `int`, `long`, `longlong`,
+`float`, or `double`
 - `short_name` - optional
 - `flags` - optional arrayref of `onedash`, `doc_hidden`,
 `optional`, `show_default`, `random`, and/or `toggle`.
@@ -69,12 +70,12 @@ that the returned $obj will `parse()` out:
 - `name` - defaults to Perl’s `$0`. Give empty string
 to leave this unset.
 
-## ($opts\_hr, @args) = _OBJ_->parse(@ARGV)
+## ($opts\_hr, @leftovers) = _OBJ_->parse(@ARGV)
 
 Parses a list of strings understood to be parameters to script
 invocation. Returns a hash reference of the parsed options (keyed
-on each option’s `long_name`) as well as a list of members of @ARGV that
-didn’t go into one of the parsed options.
+on each option’s `long_name`) as well as a list of “leftover” @ARGV members
+that didn’t go into one of the parsed options.
 
 If @ARGV doesn’t match _OBJ_’s stored options specification (e.g.,
 [popt(3)](http://man.he.net/man3/popt) fails the parse), an appropriate exception of type

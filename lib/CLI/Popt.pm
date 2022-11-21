@@ -101,8 +101,9 @@ that the returned $obj will C<parse()> out:
 
 =item * C<long_name> (required)
 
-=item * C<type> - optional; one of: C<none> (default), C<string>, C<short>,
-C<int>, C<long>, C<longlong>, C<float>, or C<double>
+=item * C<type> - optional; one of: C<none> (default), C<string>,
+C<argv> (i.e., an array of strings), C<short>, C<int>, C<long>, C<longlong>,
+C<float>, or C<double>
 
 =item * C<short_name> - optional
 
@@ -173,12 +174,12 @@ sub new {
 
 #----------------------------------------------------------------------
 
-=head2 ($opts_hr, @args) = I<OBJ>->parse(@ARGV)
+=head2 ($opts_hr, @leftovers) = I<OBJ>->parse(@ARGV)
 
 Parses a list of strings understood to be parameters to script
 invocation. Returns a hash reference of the parsed options (keyed
-on each option’s C<long_name>) as well as a list of members of @ARGV that
-didn’t go into one of the parsed options.
+on each option’s C<long_name>) as well as a list of “leftover” @ARGV members
+that didn’t go into one of the parsed options.
 
 If @ARGV doesn’t match I<OBJ>’s stored options specification (e.g.,
 L<popt(3)> fails the parse), an appropriate exception of type
