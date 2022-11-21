@@ -54,7 +54,7 @@ use XSLoader;
 
 use CLI::Popt::X ();
 
-our $VERSION = '0.01_01';
+our $VERSION = '0.01';
 
 XSLoader::load( __PACKAGE__, $VERSION );
 
