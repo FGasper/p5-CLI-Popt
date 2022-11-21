@@ -483,16 +483,20 @@ parse (SV* self_sv, ...)
             const char *errdesc = poptStrerror(rc);
 
             SV* args[] = {
+                newSVpvs("BadOption"),
                 newSViv(rc),
                 newSVpv(errdesc, 0),
                 newSVpv(opt, 0),
                 NULL,
             };
 
-            exs_call_sv_void(
-                (SV*) get_cv( PERL_NS "::_croak", 0 ),
+            SV* err = exs_call_method_scalar(
+                newSVpvs_flags(PERL_NS "::X", SVs_TEMP),
+                "create",
                 args
             );
+
+            croak_sv(err);
         }
 
         const char** leftovers = poptGetArgs(perl_popt->popt);

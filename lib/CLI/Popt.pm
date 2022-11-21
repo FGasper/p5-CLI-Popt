@@ -171,12 +171,6 @@ sub new {
     return $class->_new_xs( $extra{'name'}, \@opts );
 }
 
-sub _croak {
-    my ($type, @args) = @_;
-
-    Carp::croak( CLI::Popt::X->create('BadOption', $type, @args) );
-}
-
 #----------------------------------------------------------------------
 
 =head2 ($opts_hr, @args) = I<OBJ>->parse(@ARGV)

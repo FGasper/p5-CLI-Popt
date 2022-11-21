@@ -115,6 +115,4 @@ use CLI::Popt;
 
 done_testing;
 
-diag "=== all done?";
-
 1;
