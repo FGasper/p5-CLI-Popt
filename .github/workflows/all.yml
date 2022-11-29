@@ -138,8 +138,8 @@ jobs:
         uses: cygwin/cygwin-install-action@master
         with:
             packages: perl_base perl-ExtUtils-MakeMaker make gcc-g++ libcrypt-devel libnsl-devel bash popt-devel
-      - run: perl -V
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
+#      - run: perl -V
+#        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
       - run: cpan App::cpanminus
         shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
       - name: Install Dependencies
