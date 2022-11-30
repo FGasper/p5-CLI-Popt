@@ -141,7 +141,7 @@ jobs:
       - shell: C:\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
         run: |
             perl -V
-            cpan App::cpanminus
+            cpan -T App::cpanminus
             cd $GITHUB_WORKSPACE
             cpanm --verbose --notest --installdeps --with-configure --with-develop .
             perl Makefile.PL
