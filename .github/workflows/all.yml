@@ -138,22 +138,15 @@ jobs:
         uses: cygwin/cygwin-install-action@master
         with:
             packages: perl_base perl-ExtUtils-MakeMaker make gcc-g++ libcrypt-devel libnsl-devel bash popt-devel
-      - run: perl -V
-        shell: C:\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
-      - run: C:\cygwin\bin\bash.exe --login -c 'cpan App::cpanminus'
-#        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
-      - name: Install Dependencies
-        run: cd $GITHUB_WORKSPACE; cpanm --verbose --notest --installdeps --with-configure --with-develop .
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
-      - name: perl Makefile.PL
-        run: cd $GITHUB_WORKSPACE; perl Makefile.PL
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
-      - name: make
-        run: cd $GITHUB_WORKSPACE; make
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
-      - name: make test
-        run: cd $GITHUB_WORKSPACE; make test
-        shell: C:\tools\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
+      - shell: C:\cygwin\bin\bash.exe --login --norc -eo pipefail -o igncr '{0}'
+        run: |
+            perl -V
+            cpan App::cpanminus
+            cd $GITHUB_WORKSPACE
+            cpanm --verbose --notest --installdeps --with-configure --with-develop .
+            perl Makefile.PL
+            make
+            make test
 
   qemu-alpine:
     runs-on: ubuntu-latest
